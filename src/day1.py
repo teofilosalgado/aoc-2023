@@ -12,7 +12,7 @@ lookup = {
 }
 
 
-def find_number(line: str, is_reversed: bool = False):
+def _find_number(line: str, is_reversed: bool = False):
     buffer = ""
     for character in line:
         if is_reversed:
@@ -25,17 +25,28 @@ def find_number(line: str, is_reversed: bool = False):
             return buffer.replace(buffer, lookup[match])
 
 
-def main(input_file_path: str):
+def part1(input_file_path: str):
+    result: int = 0
+    with open(input_file_path, "r", encoding="UTF-8") as input_file:
+        for line in input_file.readlines():
+            first_number = next(x for x in line if x.isdigit())
+            last_number = next(x for x in reversed(line) if x.isdigit())
+            current = int(f"{first_number}{last_number}")
+            result = result + current
+    return result
+
+
+def part2(input_file_path: str):
     result: int = 0
     with open(input_file_path, "r", encoding="UTF-8") as input_file:
         for line in input_file.read().splitlines():
-            first_number = find_number(line)
-            last_number = find_number(line[::-1], True)
+            first_number = _find_number(line)
+            last_number = _find_number(line[::-1], True)
             current = int(f"{first_number}{last_number}")
             result = result + current
     return result
 
 
 if __name__ == "__main__":
-    print(main("inputs/day1_input1.txt"))
-    print(main("inputs/day1_input2.txt"))
+    print(part1("inputs/day1_input.txt"))
+    print(part2("inputs/day1_input.txt"))
