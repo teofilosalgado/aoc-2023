@@ -8,4 +8,4 @@ class MainTest(unittest.TestCase):
         self.assertEqual(part1("inputs/day2_sample1.txt"), 8)
 
     def test_part2(self):
-        self.assertEqual(part2("inputs/day2_sample2.txt"), 2286)
+        self.assertEqual(part2("inputs/day2_sample1.txt"), 2286)

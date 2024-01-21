@@ -27,5 +27,24 @@ def part1(input_file_path: str):
     return result
 
 
+def part2(input_file_path: str):
+    result = {}
+    with open(input_file_path, "r", encoding="UTF-8") as input_file:
+        for line in input_file.readlines():
+            card_id_match = re.search(r"Card +(\d+):", line, re.IGNORECASE)
+            if card_id_match is None:
+                raise RuntimeError("Missing card ID")
+            card_id: int = int(card_id_match.group(1))
+            match_count = count_matching_numbers_by_line(line)
+
+            if card_id not in result:
+                result[card_id] = 1
+
+            for n in range(card_id + 1, card_id + 1 + match_count):
+                result[n] = result.get(n, 1) + result[card_id]
+    return sum(result.values())
+
+
 if __name__ == "__main__":
     print(part1("inputs/day4_input.txt"))
+    print(part2("inputs/day4_input.txt"))
